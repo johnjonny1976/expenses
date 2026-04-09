@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance App UI</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bg-color: #F4F7FF;
+            --card-bg: #FFFFFF;
+            --text-main: #1A1C3D;
+            --text-muted: #8E94BB;
+            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --brand-gradient: linear-gradient(90deg, #5EE7DF 0%, #B490FF 100%);
+            --expense-gradient: linear-gradient(90deg, #FF9A9E 0%, #FAD0C4 100%);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            --radius: 24px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #E0E5FF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text-main);
+        }
+
+        /* Phone Container */
+        .phone-wrapper {
+            width: 375px;
+            height: 812px;
+            background: var(--bg-color);
+            border-radius: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.2);
+            border: 8px solid #fff;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Section */
+        .header {
+            padding: 40px 24px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: #FFD573;
+            overflow: hidden;
+        }
+
+        .welcome-text p {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .welcome-text h3 {
+            font-size: 16px;
+        }
+
+        /* Balance Card */
+        .balance-card {
+            margin: 0 24px;
+            padding: 24px;
+            background: var(--brand-gradient);
+            border-radius: var(--radius);
+            color: white;
+            box-shadow: 0 15px 35px rgba(180, 144, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .balance-card::after {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+
+        .balance-label {
+            font-size: 14px;
+            opacity: 0.9;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .total-amount {
+            font-size: 32px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .stat-icon {
+            width: 24px;
+            height: 24px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Transactions Section */
+        .section-header {
+            padding: 24px 24px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .view-all {
+            color: var(--text-muted);
+            font-size: 12px;
+            text-decoration: none;
+        }
+
+        .transaction-list {
+            flex: 1;
+            padding: 0 24px;
+            overflow-y: auto;
+        }
+
+        .transaction-item {
+            background: white;
+            padding: 16px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+        }
+
+        .details {
+            flex: 1;
+        }
+
+        .details h4 { font-size: 15px; margin-bottom: 4px; }
+        .details p { font-size: 12px; color: var(--text-muted); }
+
+        .amount {
+            text-align: right;
+        }
+
+        .amount.negative { color: #FF5E5E; font-weight: 600; }
+
+        /* Bottom Nav */
+        .bottom-nav {
+            height: 80px;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding-bottom: 20px;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+            position: relative;
+        }
+
+        .fab {
+            width: 56px;
+            height: 56px;
+            background: var(--brand-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            position: absolute;
+            top: -28px;
+            box-shadow: 0 10px 20px rgba(180, 144, 255, 0.4);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .fab:hover { transform: scale(1.1); }
+
+        .nav-item { color: var(--text-muted); cursor: pointer; }
+        .nav-item.active { color: #B490FF; }
+
+    </style>
+</head>
+<body>
+
+    <div class="phone-wrapper">
+        <header class="header">
+            <div class="user-info">
+                <div class="avatar">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=John" alt="User">
+                </div>
+                <div class="welcome-text">
+                    <p>Welcome!</p>
+                    <h3>John Doe</h3>
+                </div>
+            </div>
+            <div class="settings-btn">
+                <i data-lucide="settings" color="#8E94BB" size="20"></i>
+            </div>
+        </header>
+
+        <div class="balance-card">
+            <p class="balance-label">Total Balance</p>
+            <h1 class="total-amount">$ 4800.00</h1>
+            <div class="stats-row">
+                <div class="stat-item">
+                    <div class="stat-icon"><i data-lucide="arrow-down" size="14"></i></div>
+                    <div>
+                        <p style="font-size: 10px; opacity: 0.8;">Income</p>
+                        <p style="font-size: 13px; font-weight: 600;">2,500.00</p>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon"><i data-lucide="arrow-up" size="14"></i></div>
+                    <div>
+                        <p style="font-size: 10px; opacity: 0.8;">Expenses</p>
+                        <p style="font-size: 13px; font-weight: 600;">800.00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <h3>Transactions</h3>
+            <a href="#" class="view-all">View All</a>
+        </div>
+
+        <div class="transaction-list">
+            <div class="transaction-item">
+                <div class="icon-box" style="background: #FFF5E1;">
+                    <i data-lucide="utensils" color="#FFB11A" size="20"></i>
+                </div>
+                <div class="details">
+                    <h4>Food</h4>
+                    <p>Today</p>
+                </div>
+                <div class="amount negative">-$45.00</div>
+            </div>
+
+            <div class="transaction-item">
+                <div class="icon-box" style="background: #F0E7FF;">
+                    <i data-lucide="shopping-bag" color="#8B5CF6" size="20"></i>
+                </div>
+                <div class="details">
+                    <h4>Shopping</h4>
+                    <p>Today</p>
+                </div>
+                <div class="amount negative">-$280.00</div>
+            </div>
+
+            <div class="transaction-item">
+                <div class="icon-box" style="background: #FFE9E9;">
+                    <i data-lucide="clapperboard" color="#FF4D4D" size="20"></i>
+                </div>
+                <div class="details">
+                    <h4>Entertainment</h4>
+                    <p>Yesterday</p>
+                </div>
+                <div class="amount negative">-$60.00</div>
+            </div>
+
+            <div class="transaction-item">
+                <div class="icon-box" style="background: #E1F9F6;">
+                    <i data-lucide="plane" color="#10B981" size="20"></i>
+                </div>
+                <div class="details">
+                    <h4>Travel</h4>
+                    <p>Yesterday</p>
+                </div>
+                <div class="amount negative">-$250.00</div>
+            </div>
+        </div>
+
+        <nav class="bottom-nav">
+            <div class="nav-item active"><i data-lucide="layout-grid"></i></div>
+            <div class="fab">
+                <i data-lucide="plus" size="28"></i>
+            </div>
+            <div class="nav-item"><i data-lucide="pie-chart"></i></div>
+        </nav>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Simple interaction for the FAB
+        document.querySelector('.fab').addEventListener('click', () => {
+            alert('Opening "Add Expense" Screen...');
+        });
+    </script>
+</body>
+</html>
